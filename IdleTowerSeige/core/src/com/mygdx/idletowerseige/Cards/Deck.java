@@ -5,4 +5,5 @@ package com.mygdx.idletowerseige.Cards;
  */
 
 public class Deck {
+    int x= 1;
 }
