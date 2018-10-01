@@ -140,7 +140,7 @@ public class PlayState extends State {
 
         //if the screen is touched (not held)
         if(Gdx.input.justTouched()) {
-            gsm.push(new DeckState(gsm));
+            //gsm.push(new DeckState(gsm));
             order = false;
 
             //save phone tilt position
@@ -257,7 +257,7 @@ public class PlayState extends State {
             explode.start(tower.getPosition());
             tower.reposition(tower.getPosition().x + ((Castle.CASTLE_WIDTH + CASTLE_SPACING)));
             //save progress to file
-            /**
+            
             try {
                 Progression.saveProgression(player);
             }catch (IOException e) {
@@ -265,7 +265,7 @@ public class PlayState extends State {
             }
             System.out.println("game saved");
 
-             */
+
             //order = true;
         }
 
@@ -298,12 +298,12 @@ public class PlayState extends State {
 
 
         //if engine room hits tower, stop engine room
-        if(tower.collides(engine.getBounds())){
-            engine.setStop(true);
-        }
-        else{
-            engine.setStop(false);
-        }
+        //if(tower.collides(engine.getBounds())){
+        //    engine.setStop(true);
+        //}
+        //else{
+        //    engine.setStop(false);
+        //}
 
         //update cells and interfaces
         ArrayList<String> levels = new ArrayList<String>();

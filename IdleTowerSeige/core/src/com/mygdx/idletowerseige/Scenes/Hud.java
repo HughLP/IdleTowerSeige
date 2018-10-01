@@ -1,7 +1,9 @@
 package com.mygdx.idletowerseige.Scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.idletowerseige.IdleTowerSeige;
+
 import java.util.Locale;
 
 
@@ -25,6 +28,9 @@ public class Hud implements Disposable{
     private boolean move;
     private float timeCount;
     private double score;
+    //private TextView myTv;
+    //private Typeface myFont;
+    private BitmapFont font;
 
     //top layer
     private Label bankLabel;
@@ -36,6 +42,8 @@ public class Hud implements Disposable{
     private Label gpsScoreLabel;
     private Label countDistLabel;
     private Label levelLabel;
+    private Label.LabelStyle style;
+
 
     //bank calculations
     private double bank;
@@ -46,6 +54,10 @@ public class Hud implements Disposable{
         timeCount = 0;
         score = 0.0;
         move = true;
+        font = new BitmapFont(Gdx.files.internal("Fonts/PixelFontWhite.fnt"));
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font.getData().setScale(.1f, .1f);
+        style = new Label.LabelStyle(font, Color.WHITE);
 
         //bank
         this.bank = bank;
@@ -59,23 +71,29 @@ public class Hud implements Disposable{
 
         //set up table
         Table table = new Table();
-        table.top();//put it at the top of stage
+        table.top();
+        table.left();//put it at the top of stage
         table.setFillParent(true);
 
+
+
         //top layer
-        bankLabel = new Label("BANK", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        gpsLabel = new Label("GOLD PER/SEC", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        distanceLabel = new Label("DISTANCE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        bankLabel = new Label("BANK", style);
+        gpsLabel = new Label("GOLD PER/SEC", style);
+        distanceLabel = new Label("DISTANCE", style);
+        worldLabel = new Label("WORLD", style);
+
 
         //bottom layer
-        goldLabel = new Label(String.format(Locale.ENGLISH, "%.2f", this.bank), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        gpsScoreLabel = new Label(String.format(Locale.ENGLISH, "%.2f", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        countDistLabel = new Label(String.format(Locale.ENGLISH, "%6d", this.distance), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label(String.format(Locale.ENGLISH,"%1d", this.world), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        goldLabel = new Label(String.format(Locale.ENGLISH, "%.2f", this.bank), style);
+        gpsScoreLabel = new Label(String.format(Locale.ENGLISH, "%.2f", score), style);
+        countDistLabel = new Label(String.format(Locale.ENGLISH, "%6d", this.distance), style);
+        levelLabel = new Label(String.format(Locale.ENGLISH,"%1d", this.world), style);
+
 
         //add to table, first row
-        table.add().expandX().padTop(10);
+        //table.row().height(20);
+        table.add().expandX().padTop(50);
         table.add().expandX().padTop(10);
         table.add().expandX().padTop(10);
         table.add().expandX().padTop(10);
@@ -84,10 +102,12 @@ public class Hud implements Disposable{
         table.add(distanceLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
 
+
         //new row
         table.row();
 
         //second row
+        //table.row().height(20);
         table.add().expandX().padTop(10);
         table.add().expandX().padTop(10);
         table.add().expandX().padTop(10);
